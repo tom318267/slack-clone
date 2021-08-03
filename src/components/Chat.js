@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 
@@ -35,7 +35,7 @@ const Chat = () => {
     <ChatContainer>
       {roomDetails && roomMessages && (
         <>
-          <Header>
+          <Header className="header-container">
             <HeaderLeft>
               <h4>
                 <strong>#{roomDetails?.data().name}</strong>
@@ -125,4 +125,8 @@ const ChatContainer = styled.div`
   flex-grow: 1;
   overflow-y: scroll;
   margin-top: 60px;
+
+  .header-container {
+    margin-top: 30px;
+  }
 `;

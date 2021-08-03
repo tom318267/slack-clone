@@ -12,7 +12,7 @@ import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddIcon from "@material-ui/icons/Add";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { auth, db } from "../firebase";
 import { useCollection } from "react-firebase-hooks/firestore";
 import SidebarOption from "./SidebarOption";

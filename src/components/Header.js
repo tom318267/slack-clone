@@ -3,7 +3,7 @@ import { Avatar } from "@material-ui/core";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import SearchIcon from "@material-ui/icons/Search";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -17,7 +17,7 @@ const Header = () => {
           alt={user?.displayName}
           src={user?.photoURL}
         />
-        <AccessTimeIcon />
+        <AccessTimeIcon className="time-icon" />
       </HeaderLeft>
 
       <HeaderSearch>
@@ -26,7 +26,7 @@ const Header = () => {
       </HeaderSearch>
 
       <HeaderRight>
-        <HelpOutlineIcon />
+        <HelpOutlineIcon className="help" />
       </HeaderRight>
     </HeaderContainer>
   );
@@ -54,6 +54,10 @@ const HeaderLeft = styled.div`
   > .MuiSvgIcon-root {
     margin-left: auto;
     margin-right: 30px;
+  }
+
+  .time-icon {
+    cursor: pointer;
   }
 `;
 
@@ -94,5 +98,9 @@ const HeaderRight = styled.div`
   > .MuiSvgIcon-root {
     margin-left: auto;
     margin-right: 20px;
+  }
+
+  .help {
+    cursor: pointer;
   }
 `;

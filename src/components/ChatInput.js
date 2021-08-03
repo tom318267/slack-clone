@@ -1,6 +1,6 @@
 import { Button } from "@material-ui/core";
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { auth, db } from "../firebase";
 import firebase from "firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
