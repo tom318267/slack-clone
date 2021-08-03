@@ -1,16 +1,18 @@
-import { Button } from "@material-ui/core";
 import React, { useState } from "react";
-import styled from "styled-components/macro";
+
 import { auth, db } from "../firebase";
 import firebase from "firebase";
+import { Button } from "@material-ui/core";
 import { useAuthState } from "react-firebase-hooks/auth";
+import styled from "styled-components";
 
 const ChatInput = ({ channelName, channelId, chatRef }) => {
-  const [user] = useAuthState(auth);
   const [input, setInput] = useState("");
+  const [user] = useAuthState(auth);
 
   const sendMessage = (e) => {
     e.preventDefault();
+    console.log(channelId);
 
     if (!channelId) {
       return false;
@@ -23,20 +25,20 @@ const ChatInput = ({ channelName, channelId, chatRef }) => {
       userImage: user.photoURL,
     });
 
-    chatRef.current.scrollIntoView({
+    chatRef?.current.scrollIntoView({
       behavior: "smooth",
+      block: "nearest",
     });
-
     setInput("");
   };
-
   return (
     <ChatInputContainer>
       <form>
         <input
-          onChange={(e) => setInput(e.target.value)}
+          placeholder={`Message #${channelName.toLowerCase()}`}
           value={input}
-          placeholder={`Message #${channelName}`}
+          onChange={(e) => setInput(e.target.value)}
+          type="text"
         />
         <Button hidden type="submit" onClick={sendMessage}>
           SEND
@@ -50,23 +52,21 @@ export default ChatInput;
 
 const ChatInputContainer = styled.div`
   border-radius: 20px;
-
-  form {
+  > form {
     position: relative;
     display: flex;
     justify-content: center;
   }
-
-  form input {
+  > form > input {
     position: fixed;
     bottom: 30px;
     width: 60%;
     border: 1px solid gray;
+    border-radius: 3px;
     padding: 20px;
     outline: none;
   }
-
-  form button {
-    display: none;
+  > form > button {
+    display: none !important;
   }
 `;

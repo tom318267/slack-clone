@@ -26,16 +26,14 @@ const Chat = () => {
   );
 
   useEffect(() => {
-    chatRef?.current?.scrollIntoView({
-      behavior: "smooth",
-    });
+    chatRef?.current?.scrollIntoView();
   }, [roomId, loading]);
 
   return (
     <ChatContainer>
       {roomDetails && roomMessages && (
         <>
-          <Header className="header-container">
+          <Header>
             <HeaderLeft>
               <h4>
                 <strong>#{roomDetails?.data().name}</strong>
@@ -50,7 +48,7 @@ const Chat = () => {
             </HeaderRight>
           </Header>
 
-          <ChatMessages>
+          <div className="chat-messages">
             {roomMessages?.docs.map((doc) => {
               const { message, timestamp, user, userImage } = doc.data();
 
@@ -65,7 +63,8 @@ const Chat = () => {
               );
             })}
             <ChatBottom ref={chatRef} />
-          </ChatMessages>
+          </div>
+
           <ChatInput
             chatRef={chatRef}
             channelName={roomDetails?.data().name}
@@ -88,9 +87,8 @@ const Header = styled.div`
   justify-content: space-between;
   padding: 20px;
   border-bottom: 1px solid lightgray;
+  margin-top: 60px;
 `;
-
-const ChatMessages = styled.div``;
 
 const HeaderLeft = styled.div`
   display: flex;
@@ -124,9 +122,4 @@ const ChatContainer = styled.div`
   flex: 0.7;
   flex-grow: 1;
   overflow-y: scroll;
-  margin-top: 60px;
-
-  .header-container {
-    margin-top: 30px;
-  }
 `;

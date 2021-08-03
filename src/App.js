@@ -1,16 +1,15 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import "./App.css";
-import Header from "./components/Header";
-import styled from "styled-components/macro";
-import Sidebar from "./components/Sidebar";
-import Chat from "./components/Chat";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
+import Sidebar from "./components/Sidebar";
+import Chat from "./components/Chat";
 import Login from "./components/Login";
+import Header from "./components/Header";
 import Spinner from "react-spinkit";
+import styled from "styled-components";
 
-function App() {
+const App = () => {
   const [user, loading] = useAuthState(auth);
 
   if (loading) {
@@ -19,16 +18,22 @@ function App() {
         <AppLoadingContents>
           <img
             src="https://cdn.mos.cms.futurecdn.net/SDDw7CnuoUGax6x9mTo7dd.jpg"
-            alt="slack-logo"
+            alt=""
           />
-          <Spinner name="ball-spin-fade-loader" color="purple" fadeIn="none" />
+
+          <Spinner
+            className="app__spinner"
+            name="ball-spin-fade-loader"
+            color="purple"
+            fadeIn="none"
+          />
         </AppLoadingContents>
       </AppLoading>
     );
   }
 
   return (
-    <div className="App">
+    <div className="app">
       <Router>
         {!user ? (
           <Login />
@@ -38,7 +43,10 @@ function App() {
             <AppBody>
               <Sidebar />
               <Switch>
-                <Route exact path="/">
+                <Route path="/room/:roomId">
+                  <Chat />
+                </Route>
+                <Route path="/">
                   <Chat />
                 </Route>
               </Switch>
@@ -48,13 +56,22 @@ function App() {
       </Router>
     </div>
   );
-}
+};
 
 export default App;
 
-const AppBody = styled.div`
+const AppLoadingContents = styled.div`
+  text-align: center;
+  padding-bottom: 100px;
   display: flex;
-  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  > img {
+    height: 100px;
+    padding: 20px;
+    margin-bottom: 40px;
+  }
 `;
 
 const AppLoading = styled.div`
@@ -64,16 +81,7 @@ const AppLoading = styled.div`
   width: 100%;
 `;
 
-const AppLoadingContents = styled.div`
-  text-align: center;
-  padding-bottom: 100px;
+const AppBody = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  img {
-    height: 100px;
-    padding: 20px;
-    margin-bottom: 40px;
-  }
+  height: 100vh;
 `;
